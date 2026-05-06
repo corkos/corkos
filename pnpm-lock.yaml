@@ -1,0 +1,23 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .: {}
+
+  packages/core: {}
+
+  packages/desktop:
+    dependencies:
+      '@corkos/core':
+        specifier: workspace:*
+        version: link:../core
+
+  packages/mobile:
+    dependencies:
+      '@corkos/core':
+        specifier: workspace:*
+        version: link:../core

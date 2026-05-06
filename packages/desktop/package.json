@@ -1,0 +1,20 @@
+{
+  "name": "@corkos/desktop",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Desktop presentation layer of Corkos: floating windows, taskbar, and corkboard workspace.",
+  "license": "MIT",
+  "author": "Fermín Zabalegui",
+  "main": "./src/index.ts",
+  "type": "module",
+  "dependencies": {
+    "@corkos/core": "workspace:*"
+  },
+  "scripts": {
+    "build": "echo 'TODO: configure build for @corkos/desktop'",
+    "test": "echo 'TODO: configure tests for @corkos/desktop'",
+    "lint": "echo 'TODO: configure lint for @corkos/desktop'",
+    "format": "echo 'TODO: configure format for @corkos/desktop'",
+    "clean": "echo 'TODO: configure clean for @corkos/desktop'"
+  }
+}

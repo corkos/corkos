@@ -1,0 +1,20 @@
+{
+  "name": "@corkos/mobile",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Mobile presentation layer of Corkos: springboard, full-screen views, and app switcher.",
+  "license": "MIT",
+  "author": "Fermín Zabalegui",
+  "main": "./src/index.ts",
+  "type": "module",
+  "dependencies": {
+    "@corkos/core": "workspace:*"
+  },
+  "scripts": {
+    "build": "echo 'TODO: configure build for @corkos/mobile'",
+    "test": "echo 'TODO: configure tests for @corkos/mobile'",
+    "lint": "echo 'TODO: configure lint for @corkos/mobile'",
+    "format": "echo 'TODO: configure format for @corkos/mobile'",
+    "clean": "echo 'TODO: configure clean for @corkos/mobile'"
+  }
+}
