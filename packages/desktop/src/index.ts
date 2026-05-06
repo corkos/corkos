@@ -3,4 +3,3 @@
 // This file is a placeholder; real components will arrive in upcoming sessions.
 
 export const VERSION = '0.0.0';
-
