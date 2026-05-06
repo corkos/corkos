@@ -11,7 +11,7 @@
     "@corkos/core": "workspace:*"
   },
   "scripts": {
-    "build": "echo 'TODO: configure build for @corkos/desktop'",
+    "build": "tsc --build",
     "test": "echo 'TODO: configure tests for @corkos/desktop'",
     "lint": "echo 'TODO: configure lint for @corkos/desktop'",
     "format": "echo 'TODO: configure format for @corkos/desktop'",

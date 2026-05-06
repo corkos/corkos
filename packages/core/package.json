@@ -8,7 +8,7 @@
   "main": "./src/index.ts",
   "type": "module",
   "scripts": {
-    "build": "echo 'TODO: configure build for @corkos/core'",
+    "build": "tsc --build",
     "test": "echo 'TODO: configure tests for @corkos/core'",
     "lint": "echo 'TODO: configure lint for @corkos/core'",
     "format": "echo 'TODO: configure format for @corkos/core'",
