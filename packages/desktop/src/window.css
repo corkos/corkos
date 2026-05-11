@@ -1,0 +1,16 @@
+.corkos-window {
+  position: absolute;
+  box-sizing: border-box;
+  width: 200px;
+  height: 200px;
+  padding: 12px;
+  background-color: #fff9b1;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.corkos-window__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+}

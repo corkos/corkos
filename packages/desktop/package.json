@@ -16,5 +16,15 @@
     "lint": "echo 'TODO: configure lint for @corkos/desktop'",
     "format": "echo 'TODO: configure format for @corkos/desktop'",
     "clean": "echo 'TODO: configure clean for @corkos/desktop'"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
