@@ -81,7 +81,8 @@ The technology choices below are deliberate and should be respected when contrib
 ### Testing (planned)
 
 - **Vitest** is the intended testing framework when test infrastructure is added. Vitest aligns with Vite-based ecosystems and has excellent TypeScript support.
-- Until tests are introduced, package `test` scripts are placeholders.
+- Until Vitest is configured in this repository, **no tests should be added**. Package `test` scripts are placeholders.
+- **If a feature requires testing before the infrastructure exists**, the correct action is to set up Vitest as a separate commit first, then add the tests. Do not improvise tests with alternative frameworks or ad-hoc scripts.
 
 ### What is intentionally absent
 
@@ -176,7 +177,18 @@ Once React components are introduced, the following apply to `@corkos/desktop` a
 - **Hooks at the top.** All `use*` calls happen at the top of the component, before any conditional logic.
 - **Props as named type.** Always declare props as a named `type Props = { ... }` above the component, never inline.
 - **No default exports for components in shared modules.** Prefer named exports for clarity in import statements. The exception is `index.tsx`-style entry points where a default export is expected.
-- **No prop drilling deeper than two levels.** If a prop traverses more than two component layers, lift state to a context or a store.
+- **No prop drilling deeper than two levels.** If a prop traverses more than two component layers, lift state to a React Context provided at the presentation-layer root. Do not push React-specific state mechanisms (Context, hooks) into `@corkos/core`.
+
+### State and React integration
+
+The framework is split deliberately:
+
+- **`@corkos/core` is React-free.** It exposes pure functions, types, and possibly small classes for domain logic. It does not import React, does not define hooks, and does not provide Context.
+- **`@corkos/desktop` and `@corkos/mobile` are the React layers.** Each presentation layer wraps `@corkos/core` in its own React hooks and Contexts. For example, `@corkos/desktop` may expose a `useNotes()` hook that internally uses `@corkos/core` functions and a React Context, but the Context and the hook live in `@corkos/desktop`, not in `core`.
+- **Cross-cutting domain state** (the list of notes, the focused note, the workspace layout) is owned by `@corkos/core` as plain data, and exposed to React components through the presentation layer's own hooks.
+- **UI-only state** (a dropdown is open, a modal is visible) stays local to the React component as `useState`.
+
+This split ensures that `@corkos/core` could be consumed by a non-React UI in the future, and keeps presentation concerns where they belong.
 
 ### Comments and documentation
 
