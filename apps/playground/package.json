@@ -1,0 +1,27 @@
+{
+  "name": "@corkos/playground",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Internal sandbox for testing Corkos components. Not published.",
+  "license": "MIT",
+  "author": "Fermín Zabalegui",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@corkos/core": "workspace:*",
+    "@corkos/desktop": "workspace:*",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.12"
+  }
+}
