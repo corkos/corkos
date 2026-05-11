@@ -207,10 +207,12 @@ Corkos is organized as a pnpm workspaces monorepo. Each package under `packages/
 
 ```text
 corkos/
-├── packages/                   # All published packages live here
+├── packages/                   # Published packages (open source via npm)
 │   ├── core/                   # @corkos/core — agnostic logic
 │   ├── desktop/                # @corkos/desktop — desktop UI layer
 │   └── mobile/                 # @corkos/mobile — mobile UI layer
+├── apps/                       # Internal apps — not published
+│   └── playground/             # Sandbox to test Corkos components
 ├── .vscode/                    # Workspace configuration for VS Code
 ├── .gitignore
 ├── .prettierignore
@@ -225,6 +227,13 @@ corkos/
 ├── README.md                   # Public-facing introduction
 └── CLAUDE.md                   # This file
 ```
+
+The repository contains two top-level folders for code:
+
+- **`packages/`** holds the published Corkos packages. These are the open-source deliverables, distributed via npm. They contain no application-specific code.
+- **`apps/`** holds internal applications used during Corkos development — sandboxes, examples, and experimental prototypes. These are never published. They depend on `packages/*` to exercise the framework in real conditions, but they are not part of the Corkos framework itself.
+
+Apps are explicitly **not** the place to build production applications. The cultural agenda (agenda.madrid) and its network (agenda.zone) live in their own repositories. Apps here exist purely to serve Corkos's own development needs.
 
 ### The three packages
 
