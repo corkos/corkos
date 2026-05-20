@@ -6,6 +6,12 @@
   padding: 12px;
   background-color: #fff9b1;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  user-select: none;
+}
+
+.corkos-window:active {
+  cursor: grabbing;
 }
 
 .corkos-window__title {

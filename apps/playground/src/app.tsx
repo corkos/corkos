@@ -1,9 +1,14 @@
-import { createNote } from '@corkos/core';
-import { Window } from '@corkos/desktop';
+import { DndContext } from '@dnd-kit/core';
 
-const helloNote = createNote('Hello, Cork', { x: 100, y: 100 });
+import { createNote } from '@corkos/core';
+import { Window, useNotes } from '@corkos/desktop';
+
+const initialNotes = [createNote('Hello, Cork', { x: 100, y: 100 })];
 
 export function App() {
+  const { notes, moveNote } = useNotes(initialNotes);
+  const note = notes[0];
+
   return (
     <div
       style={{
@@ -14,7 +19,9 @@ export function App() {
         overflow: 'hidden',
       }}
     >
-      <Window note={helloNote} />
+      <DndContext>
+        {note && <Window note={note} onMove={(newPosition) => moveNote(note.id, newPosition)} />}
+      </DndContext>
     </div>
   );
 }

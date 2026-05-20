@@ -8,7 +8,8 @@
   "main": "./src/index.ts",
   "type": "module",
   "dependencies": {
-    "@corkos/core": "workspace:*"
+    "@corkos/core": "workspace:*",
+    "@dnd-kit/core": "^6.3.1"
   },
   "scripts": {
     "build": "tsc --build",
