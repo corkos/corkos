@@ -12,6 +12,29 @@ If you are a human contributor, this file is your map. The README is the friendl
 - **Scope:** Corkos as a framework. Application-specific context (e.g., agenda.madrid) lives in its own repository.
 - **Status:** living document. Update it when significant decisions change.
 
+## Where project knowledge lives
+
+Information about Corkos belongs in the repository, not in any
+collaborator's local notes or AI memory system. The split is:
+
+- **Architectural decisions, conventions, principles, glossary** — this
+  document (`CLAUDE.md`).
+- **Anticipated design decisions and deferred work** — `ROADMAP.md`,
+  with a clear "Triggered by" condition for each item.
+- **Code-level documentation** — JSDoc comments in source files,
+  scoped to the unit being documented.
+
+If during a working session a piece of project-relevant information
+emerges (an architectural insight, a deferred decision, a watch-item,
+a constraint discovered), it is captured here in the repository before
+the session ends. Personal preferences and individual workflow notes
+may stay in local tooling; project-relevant information does not.
+
+The reason is durability and shareability: information that only lives
+on one machine or in one tool is lost the moment the machine changes,
+the tool updates, or another person joins. Information in the
+repository survives all three.
+
 ## Vision
 
 Corkos brings the familiarity of a desktop or mobile operating system to the web. The fundamental insight is simple: people already know how to use an OS. They know how to open a window, drag it, minimize it, switch between apps, pin shortcuts on a desktop or home screen. Decades of OS conventions have shaped the universal mental model of personal computing.
