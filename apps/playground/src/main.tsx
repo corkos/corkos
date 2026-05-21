@@ -1,5 +1,6 @@
 import './reset.css';
 
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './app';
@@ -9,4 +10,8 @@ if (container === null) {
   throw new Error('Root container #root not found in index.html');
 }
 
-createRoot(container).render(<App />);
+createRoot(container).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
