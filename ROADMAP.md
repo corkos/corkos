@@ -133,3 +133,22 @@ yes, it becomes a custom property. If no, it stays hard-coded. This
 is preventive design, not speculative implementation: we are not
 building the theme system, we are making sure it can be built later
 without refactoring what exists.
+
+### Dragging class cleanup on DndContext unmount
+
+The `corkos-dragging` body class is currently applied by playground
+handlers wired to `DndContext` (`onDragStart`/`onDragEnd`/
+`onDragCancel`). If the `DndContext` is ever placed under conditional
+logic — for example, inside a `Workspace` component that mounts and
+unmounts — a component unmount during an active drag would leave the
+class orphaned on the body, and any subsequent cursor would remain
+stuck as `grabbing` until the page is reloaded.
+
+Resolution when the case appears: add a `useEffect` cleanup in the
+component that owns these handlers, ensuring the class is removed
+on unmount.
+
+Triggered by: extracting `DndContext` setup into a conditionally
+mounted component (most likely a `Workspace` envelope in
+`@corkos/desktop`, when a second consumer makes the extraction
+worthwhile).
