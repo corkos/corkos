@@ -234,6 +234,54 @@ Even though tests will arrive later, the convention is fixed in advance:
 - **Test names read as sentences**: `it('returns null when no window is focused')`, not `it('test getFocusedWindow null case')`.
 - **Pure unit tests** preferred over integration tests for the framework. Integration concerns belong in consuming applications.
 
+## Styling conventions
+
+Corkos provides minimal default styling and is intentionally neutral
+in aesthetic, but it is designed so that external themes are
+straightforward to author without forking or refactoring the
+framework.
+
+### CSS Custom Properties
+
+Any CSS value that an external theme might reasonably want to
+customize is declared as a CSS Custom Property with the `--corkos-`
+prefix, with its default visible at the declaration site. Themes
+override these variables; they do not modify the framework's CSS.
+
+**What gets variabilized:**
+
+- Colors (backgrounds, borders, text)
+- Border widths, radii, styles
+- Shadows
+- Padding and visual spacing
+- Typography (font family, weight, size, line-height)
+- Anything that contributes to "how a component looks"
+
+**What stays hard-coded:**
+
+- Layout primitives (`position`, `display`, `box-sizing`)
+- Structural sizing (`width`, `height`, `min-height` when they
+  define the component's contract, not its aesthetic)
+- Behavioral properties (`cursor` values when they communicate
+  affordance, `user-select` when it serves the interaction)
+- Anything that contributes to "how a component works"
+
+### Default values
+
+Defaults are sober, neutral, and functional. They are a reasonable
+starting point, not an opinionated aesthetic. A consumer using
+Corkos without any theme should get something visually plain but
+fully usable.
+
+### Themes are out of scope for the framework
+
+The Corkos framework does not ship themes. Themes are external
+artifacts (separate packages, consumer CSS files, or runtime style
+injection) that override the published custom properties. The
+framework's responsibility is to expose a complete and coherent
+set of variables; the theme's responsibility is to assign aesthetic
+values to them.
+
 ## Repository structure
 
 Corkos is organized as a pnpm workspaces monorepo. Each package under `packages/` is a separate published unit.
