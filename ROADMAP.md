@@ -94,3 +94,42 @@ becomes a concrete need, the likely resolution is:
 
 Triggered by: the first need to publish `@corkos/desktop` to npm, or
 the first external consumer that cannot use the workspace symlink.
+
+### External theming ecosystem
+
+Corkos is being designed so that authoring an external theme (e.g.
+"Windows 95 classic", "Apple System 1", "Xerox Star inspired",
+"macOS modern") is a tractable CSS exercise, not a fork of the
+framework.
+
+The convention is established in CLAUDE.md (see "Styling
+conventions"): any visually-customizable property is declared as
+a `--corkos-*` custom property with a visible default. External
+themes override these variables; they do not modify framework CSS.
+
+**Today's reality:** the framework ships sober, neutral defaults
+and exposes its custom properties. No theme packages exist. No
+formal theme API exists.
+
+**Anticipated work when external themes become a concrete need:**
+
+- Decide packaging convention for themes (e.g. `@corkos-themes/win95`
+  as separate npm packages, or a `@corkos/themes` umbrella package
+  with subpaths).
+- Decide application convention (class on root container, attribute
+  selector, CSS layer, or other).
+- Document the full public API of custom properties as part of
+  Corkos's published reference.
+- Establish semver discipline for custom property names (renaming
+  or removing a variable becomes a breaking change of the framework).
+
+Triggered by: the first concrete need for a theme beyond the
+defaults — whether driven by agenda.madrid, by a contributor, or by
+an explicit design milestone.
+
+**Discipline today:** every CSS file added to Corkos must consider
+whether each property could be reasonably customized by a theme. If
+yes, it becomes a custom property. If no, it stays hard-coded. This
+is preventive design, not speculative implementation: we are not
+building the theme system, we are making sure it can be built later
+without refactoring what exists.
