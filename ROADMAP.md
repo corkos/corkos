@@ -56,3 +56,41 @@ defaults:
 
 This is a dedicated future workstream, not an incremental polish
 of T4.
+
+### CSS distribution from framework packages
+
+`@corkos/desktop` co-locates component CSS with its TypeScript files
+(e.g. `import './window.css'` inside `window.tsx`). This works
+seamlessly today because `package.json` has `"main": "./src/index.ts"`:
+consumers resolve the package source through the workspace symlink,
+and their bundler (Vite in `apps/playground`) handles the CSS import
+natively.
+
+Two known costs and one deferred decision flow from this setup:
+
+**Cost 1 — Consumer ambient declarations.** Every consumer that
+type-checks through `@corkos/desktop` must declare `*.css` modules
+itself, because the package's own `styles.d.ts` is internal to its
+compilation unit and is not exported. Today this means
+`apps/playground/src/styles.d.ts` duplicates that declaration. Any
+future consumer will have to do the same.
+
+**Cost 2 — `tsc --build` does not copy CSS to `dist/`.** When we
+switch `@corkos/desktop` to publish from `./dist/index.js` instead of
+source, the `.css` files will be missing from the published package
+and consumers will get broken imports.
+
+**Deferred decision.** Following principle 6 ("extract, don't
+predict"), we have not built a publish pipeline yet. When publishing
+becomes a concrete need, the likely resolution is:
+
+- A build step (small esbuild or rollup script) that emits `.js` and
+  `.d.ts` and copies `.css` files alongside.
+- An `exports` field in `package.json` mapping the CSS subpaths
+  explicitly, so consumers can `import '@corkos/desktop/window.css'`
+  if they prefer that style.
+- Re-evaluating whether each consumer still needs its own ambient
+  `*.css` declaration once types are properly exported.
+
+Triggered by: the first need to publish `@corkos/desktop` to npm, or
+the first external consumer that cannot use the workspace symlink.
