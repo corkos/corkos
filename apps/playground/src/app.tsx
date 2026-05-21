@@ -20,7 +20,11 @@ export function App() {
       }}
     >
       <DndContext>
-        {note && <Window note={note} onMove={(newPosition) => moveNote(note.id, newPosition)} />}
+        {note && (
+          <Window note={note} onMove={(newPosition) => moveNote(note.id, newPosition)}>
+            Este es el cuerpo de la nota. Pronto será editable.
+          </Window>
+        )}
       </DndContext>
     </div>
   );

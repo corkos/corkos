@@ -1,22 +1,83 @@
 .corkos-window {
+  /* Aesthetic surface — overridable by external themes. */
+  --corkos-window-bg: #fff9b1;
+  --corkos-window-width: 200px;
+  --corkos-window-min-height: 200px;
+  --corkos-window-border-color: rgba(0, 0, 0, 0.1);
+  --corkos-window-border-width: 1px;
+  --corkos-window-border-style: solid;
+  --corkos-window-radius: 0;
+  --corkos-window-shadow: none;
+
+  --corkos-window-header-bg: #f5ee9e;
+  --corkos-window-header-padding: 8px 12px;
+  --corkos-window-header-border-bottom-width: 0;
+  --corkos-window-header-border-bottom-style: solid;
+  --corkos-window-header-border-bottom-color: transparent;
+
+  --corkos-window-title-color: inherit;
+  --corkos-window-title-font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --corkos-window-title-font-weight: 600;
+  --corkos-window-title-font-size: 14px;
+  --corkos-window-title-line-height: 1.3;
+
+  --corkos-window-body-bg: transparent;
+  --corkos-window-body-padding: 12px;
+  --corkos-window-body-color: inherit;
+
+  /* Structural — hard-coded contract of the component. */
   position: absolute;
   box-sizing: border-box;
-  width: 200px;
-  height: 200px;
-  padding: 12px;
-  background-color: #fff9b1;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  cursor: grab;
-  user-select: none;
+  display: flex;
+  flex-direction: column;
+
+  /* Aesthetic applied. */
+  width: var(--corkos-window-width);
+  min-height: var(--corkos-window-min-height);
+  background-color: var(--corkos-window-bg);
+  border: var(--corkos-window-border-width) var(--corkos-window-border-style)
+    var(--corkos-window-border-color);
+  border-radius: var(--corkos-window-radius);
+  box-shadow: var(--corkos-window-shadow);
 }
 
-.corkos-window:active {
+.corkos-window__header {
+  /* Behavioral — serves the drag interaction. */
+  cursor: grab;
+  user-select: none;
+  box-sizing: border-box;
+
+  /* Aesthetic applied. */
+  background-color: var(--corkos-window-header-bg);
+  padding: var(--corkos-window-header-padding);
+  border-bottom: var(--corkos-window-header-border-bottom-width)
+    var(--corkos-window-header-border-bottom-style) var(--corkos-window-header-border-bottom-color);
+}
+
+.corkos-window__header:active {
   cursor: grabbing;
 }
 
 .corkos-window__title {
+  /* Structural — h3 default margin removed. */
   margin: 0;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 1.3;
+
+  /* Aesthetic applied. */
+  color: var(--corkos-window-title-color);
+  font-family: var(--corkos-window-title-font-family);
+  font-weight: var(--corkos-window-title-font-weight);
+  font-size: var(--corkos-window-title-font-size);
+  line-height: var(--corkos-window-title-line-height);
+}
+
+.corkos-window__body {
+  /* Structural — body fills the remaining height inside the window. */
+  flex: 1;
+  box-sizing: border-box;
+
+  /* Aesthetic applied. */
+  background-color: var(--corkos-window-body-bg);
+  padding: var(--corkos-window-body-padding);
+  color: var(--corkos-window-body-color);
 }

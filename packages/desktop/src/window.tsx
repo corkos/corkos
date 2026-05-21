@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import type { ReactNode } from 'react';
 
 import { useDndMonitor, useDraggable } from '@dnd-kit/core';
 
@@ -9,9 +10,10 @@ import './window.css';
 type WindowProps = {
   note: Note;
   onMove?: (newPosition: Position) => void;
+  children?: ReactNode;
 };
 
-export function Window({ note, onMove }: WindowProps) {
+export function Window({ note, onMove, children }: WindowProps) {
   const { attributes, listeners, setNodeRef } = useDraggable({ id: note.id });
   const baseRef = useRef<Position | null>(null);
 
@@ -43,10 +45,11 @@ export function Window({ note, onMove }: WindowProps) {
       ref={setNodeRef}
       className="corkos-window"
       style={{ left: note.position.x, top: note.position.y }}
-      {...listeners}
-      {...attributes}
     >
-      <div className="corkos-window__title">{note.title}</div>
+      <div className="corkos-window__header" {...listeners} {...attributes}>
+        <h3 className="corkos-window__title">{note.title}</h3>
+      </div>
+      <div className="corkos-window__body">{children}</div>
     </div>
   );
 }
