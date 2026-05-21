@@ -19,7 +19,11 @@ export function App() {
         overflow: 'hidden',
       }}
     >
-      <DndContext>
+      <DndContext
+        onDragStart={() => document.body.classList.add('corkos-dragging')}
+        onDragEnd={() => document.body.classList.remove('corkos-dragging')}
+        onDragCancel={() => document.body.classList.remove('corkos-dragging')}
+      >
         {note && (
           <Window note={note} onMove={(newPosition) => moveNote(note.id, newPosition)}>
             Este es el cuerpo de la nota. Pronto será editable.
