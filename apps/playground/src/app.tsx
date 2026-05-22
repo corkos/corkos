@@ -10,7 +10,7 @@ const initialNotes = [
 ];
 
 export function App() {
-  const { notes, moveNote } = useNotes(initialNotes);
+  const { notes, focusOrder, moveNote, focusNote } = useNotes(initialNotes);
 
   return (
     <div
@@ -31,7 +31,9 @@ export function App() {
           <Window
             key={note.id}
             note={note}
+            focusOrder={focusOrder}
             onMove={(newPosition) => moveNote(note.id, newPosition)}
+            onFocus={() => focusNote(note.id)}
           >
             {`Cuerpo de la nota: ${note.title}`}
           </Window>

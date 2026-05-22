@@ -10,10 +10,3 @@ export function createNote(title: string, position: Position): Note {
     position,
   };
 }
-
-export function moveNote(note: Note, newPosition: Position): Note {
-  return {
-    ...note,
-    position: newPosition,
-  };
-}

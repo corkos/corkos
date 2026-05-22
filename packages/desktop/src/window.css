@@ -15,6 +15,14 @@
   --corkos-window-header-border-bottom-style: solid;
   --corkos-window-header-border-bottom-color: transparent;
 
+  /* Focused-state variants. Same defaults as the base variables;
+     external themes override these to give focused notes a distinct look. */
+  --corkos-window-shadow-focused: var(--corkos-window-shadow);
+  --corkos-window-header-bg-focused: var(--corkos-window-header-bg);
+  --corkos-window-header-border-bottom-color-focused: var(
+    --corkos-window-header-border-bottom-color
+  );
+
   --corkos-window-title-color: inherit;
   --corkos-window-title-font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -80,4 +88,15 @@
   background-color: var(--corkos-window-body-bg);
   padding: var(--corkos-window-body-padding);
   color: var(--corkos-window-body-color);
+}
+
+/* Focused state. With default variables this produces no visual change;
+   themes opt in by overriding the *-focused custom properties. */
+.corkos-window--focused {
+  box-shadow: var(--corkos-window-shadow-focused);
+}
+
+.corkos-window--focused .corkos-window__header {
+  background-color: var(--corkos-window-header-bg-focused);
+  border-bottom-color: var(--corkos-window-header-border-bottom-color-focused);
 }

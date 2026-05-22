@@ -9,11 +9,21 @@ import './window.css';
 
 type WindowProps = {
   note: Note;
+  focusOrder?: readonly string[];
   onMove?: (newPosition: Position) => void;
+  onFocus?: () => void;
   children?: ReactNode;
 };
 
-export function Window({ note, onMove, children }: WindowProps) {
+const EMPTY_FOCUS_ORDER: readonly string[] = [];
+
+export function Window({
+  note,
+  focusOrder = EMPTY_FOCUS_ORDER,
+  onMove,
+  onFocus,
+  children,
+}: WindowProps) {
   const { attributes, listeners, setNodeRef } = useDraggable({ id: note.id });
   const baseRef = useRef<Position | null>(null);
 
@@ -21,6 +31,7 @@ export function Window({ note, onMove, children }: WindowProps) {
     onDragStart: (event) => {
       if (event.active.id === note.id) {
         baseRef.current = note.position;
+        onFocus?.();
       }
     },
     onDragMove: (event) => {
@@ -40,11 +51,17 @@ export function Window({ note, onMove, children }: WindowProps) {
     },
   });
 
+  const focusIndex = focusOrder.indexOf(note.id);
+  const zIndex = focusIndex === -1 ? 0 : focusIndex + 1;
+  const isFocused = focusOrder.length > 0 && focusOrder[focusOrder.length - 1] === note.id;
+  const className = isFocused ? 'corkos-window corkos-window--focused' : 'corkos-window';
+
   return (
     <div
       ref={setNodeRef}
-      className="corkos-window"
-      style={{ left: note.position.x, top: note.position.y }}
+      className={className}
+      style={{ left: note.position.x, top: note.position.y, zIndex }}
+      onClick={onFocus}
     >
       <div className="corkos-window__header" {...listeners} {...attributes}>
         <h3 className="corkos-window__title">{note.title}</h3>

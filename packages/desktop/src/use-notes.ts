@@ -1,16 +1,32 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-import type { Note, Position } from '@corkos/core';
-import { moveNote as moveNoteCore } from '@corkos/core';
+import type { Note, NotesState, Position } from '@corkos/core';
+import { focusNote as focusNoteCore, moveNote as moveNoteCore } from '@corkos/core';
 
 export function useNotes(initialNotes: Note[]) {
-  const [notes, setNotes] = useState<Note[]>(initialNotes);
+  const [state, setState] = useState<NotesState>(() => ({
+    notes: initialNotes,
+    focusOrder: [],
+  }));
 
   const moveNote = useCallback((id: string, newPosition: Position) => {
-    setNotes((current) =>
-      current.map((note) => (note.id === id ? moveNoteCore(note, newPosition) : note)),
-    );
+    setState((current) => moveNoteCore(current, id, newPosition));
   }, []);
 
-  return { notes, moveNote };
+  const focusNote = useCallback((id: string) => {
+    setState((current) => focusNoteCore(current, id));
+  }, []);
+
+  const focusedId = useMemo(
+    () => state.focusOrder[state.focusOrder.length - 1] ?? null,
+    [state.focusOrder],
+  );
+
+  return {
+    notes: state.notes,
+    focusOrder: state.focusOrder,
+    focusedId,
+    moveNote,
+    focusNote,
+  };
 }
