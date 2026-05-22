@@ -152,3 +152,67 @@ Triggered by: extracting `DndContext` setup into a conditionally
 mounted component (most likely a `Workspace` envelope in
 `@corkos/desktop`, when a second consumer makes the extraction
 worthwhile).
+
+### Focus integration with browser history
+
+The focus model from block 2 lives only in memory. It does not
+generate browser-history entries and is not reflected in the URL.
+The Corkos vision contemplates deep linking of workspace state
+(CLAUDE.md, "Vision" section and glossary): a URL that restores
+which notes are open, at what position, and which one is focused.
+
+When this is tackled, the open questions are:
+
+- What workspace-state information is encoded in the URL (which
+  notes, positions, which one focused).
+- Which focus changes push a new history entry vs which replace
+  the current one.
+- How this reconciles with persistence (Phase 4) when it exists:
+  if the URL contradicts the last saved state, which one wins.
+- How the initial case is treated: when the page loads with
+  persisted focus, does that count as a history entry?
+
+Triggered by: the first concrete use case that requires shareable
+URLs of workspace state, or when deep linking is tackled as a
+milestone of its own.
+
+### Persisting focusOrder, not just the notes
+
+When persistence (Phase 4) is tackled, the minimum state to
+persist includes both `notes` and `focusOrder`. Persisting only
+`notes` loses the visual order between sessions: notes would
+restore flat, without remembering which one was raised above
+which.
+
+The visually-focused note on load is none: starting a new session
+does not render a focus affordance until the user interacts, even
+if `focusOrder` was restored from the last saved state. The last
+item of `focusOrder` represents the most recent note that had
+focus, not the note shown focused on load.
+
+Triggered by: Phase 4, persistence.
+
+### Typed notes with their own internal state
+
+The current `Note` type models a generic note with id, title, and
+position. Anticipated use cases of consumer applications (e.g.
+agenda.madrid: a search note with criteria and results, a concert
+note with event data, a venue note with location info) require
+notes to have a discriminated type and their own type-specific
+internal state. This state must survive minimization (Principle 2:
+the system supports more than it implements) but is destroyed when
+the note is closed.
+
+When this is tackled, the open questions are:
+
+- How to model the Note variant (discriminated union vs generic
+  slot vs extensible record).
+- Where the type-specific state lives (in core as opaque data vs
+  in each consumer).
+- How it is serialized for persistence (Phase 4).
+- How it interacts with minimize (state preserved) and close
+  (state destroyed).
+
+Triggered by: the first consumer application that needs note types
+with their own state. Almost certainly agenda.madrid when it
+builds its first note type beyond "plain text".
