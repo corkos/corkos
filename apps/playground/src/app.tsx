@@ -3,11 +3,14 @@ import { DndContext } from '@dnd-kit/core';
 import { createNote } from '@corkos/core';
 import { Window, useNotes } from '@corkos/desktop';
 
-const initialNotes = [createNote('Hello, Cork', { x: 100, y: 100 })];
+const initialNotes = [
+  createNote('Hello, Cork', { x: 100, y: 100 }),
+  createNote('Segunda nota', { x: 180, y: 160 }),
+  createNote('Tercera nota', { x: 260, y: 220 }),
+];
 
 export function App() {
   const { notes, moveNote } = useNotes(initialNotes);
-  const note = notes[0];
 
   return (
     <div
@@ -24,11 +27,15 @@ export function App() {
         onDragEnd={() => document.body.classList.remove('corkos-dragging')}
         onDragCancel={() => document.body.classList.remove('corkos-dragging')}
       >
-        {note && (
-          <Window note={note} onMove={(newPosition) => moveNote(note.id, newPosition)}>
-            Este es el cuerpo de la nota. Pronto será editable.
+        {notes.map((note) => (
+          <Window
+            key={note.id}
+            note={note}
+            onMove={(newPosition) => moveNote(note.id, newPosition)}
+          >
+            {`Cuerpo de la nota: ${note.title}`}
           </Window>
-        )}
+        ))}
       </DndContext>
     </div>
   );
