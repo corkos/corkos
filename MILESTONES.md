@@ -53,6 +53,48 @@ board".
 - Workspace component as the DndContext envelope (likely in
   @corkos/desktop, replacing the playground-mounted DndContext)
 
+### Block decomposition (current plan)
+
+Phase 3 is split into five blocks of work, each producing one or
+two clean commits. Order respects dependencies: model before
+render, focus before creation, Workspace envelope before adding
+logic to it.
+
+1. **Plural model + plural render** — `useNotes` and the
+   underlying core operations support an array of notes; the
+   playground renders N notes from a seed. Single commit possible.
+
+2. **Focus and z-index** — active note rises to the front. Focus
+   model in `@corkos/core`, z-index applied in `@corkos/desktop`.
+   Click on a note focuses it; starting drag implicitly focuses
+   the dragged note.
+
+3. **Workspace component** — extract `DndContext` from the
+   playground into a `Workspace` component in `@corkos/desktop`.
+   The playground stops mounting `DndContext` directly; it uses
+   `<Workspace>` and renders notes inside it. This block
+   activates the ROADMAP watch-item on dragging class cleanup
+   (its "Triggered by" condition is met).
+
+4. **Note creation** — click on the `Workspace` background
+   creates a new note at the click position. Distinguishing
+   "click on background" from "click on note" relies on the
+   focus model from block 2.
+
+5. **Note deletion** — UX decision pending: button in header,
+   `Delete` key on focused note, drag-out-of-workspace, or
+   another mechanism. The decision will be made in this block's
+   chat and includes accessibility considerations (CLAUDE.md
+   Principle 3).
+
+Phase closure (verify deliverables, capture findings in ROADMAP,
+tag `v0.3.0-cork-board`) follows the established ritual and is
+not counted as a separate block.
+
+This decomposition is the current best plan; blocks may merge or
+split as work reveals new structure. Deviations are discussed
+before applying.
+
 ## Phase 4 — Persistence 🔜
 
 **Anticipated tag**: `v0.4.0-persistence`
