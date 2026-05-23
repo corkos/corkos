@@ -72,7 +72,7 @@ These three levels are **separate repositories**. Corkos has no knowledge of age
 
 ### Workspace as full-viewport background layer
 
-**Workspace as full-viewport background layer.** The `Workspace` occupies the entire viewport as the bottom layer of the application, and never scrolls: its dimensions are always the viewport's, never the content's. Other elements (taskbar, menus, floating panels, springboard) may overlap the `Workspace`, but never crop it: the `Workspace` remains a complete surface, partially occluded if needed. Notes live within the rectangle of the `Workspace` and are repositioned when it changes size. The analogy is a desktop operating system: the taskbar sits *above* the desktop, and the desktop never scrolls.
+**Workspace as full-viewport background layer.** The `Workspace` occupies the entire viewport as the bottom layer of the application, and never scrolls: its dimensions are always the viewport's, never the content's. Other elements (taskbar, menus, floating panels, springboard) may overlap the `Workspace`, but never crop it: the `Workspace` remains a complete surface, partially occluded if needed. Notes live within the rectangle of the `Workspace` and are repositioned when it changes size. The analogy is a desktop operating system: the taskbar sits _above_ the desktop, and the desktop never scrolls.
 
 ### Mode selection by device capabilities and viewport
 
@@ -179,7 +179,7 @@ agenda.madrid is the first instance, not the only one. The data model, the conve
 
 Corkos is a tool built in the European Union by people who believe in the digital sovereignty of the individual. It stands on three foundations that are not negotiable: privacy by design and by default, digital autonomy, and digital accessibility. These foundations are not aesthetic choices; they are the ethical core of the project, and every other decision in this codebase must remain compatible with them.
 
-The framing of these foundations follows the *European Declaration on Digital Rights and Principles for the Digital Decade* (2022), signed by the European Parliament, the Council, and the European Commission. The Declaration places people at the centre of digital transformation and commits to ensuring privacy and individual control over data. Corkos adopts this framing as its own.
+The framing of these foundations follows the _European Declaration on Digital Rights and Principles for the Digital Decade_ (2022), signed by the European Parliament, the Council, and the European Commission. The Declaration places people at the centre of digital transformation and commits to ensuring privacy and individual control over data. Corkos adopts this framing as its own.
 
 **Privacy by design and by default** (in the sense of Article 25 of the GDPR): Corkos is built so that the privacy-respecting behaviour is the default behaviour, not an option the user has to discover and enable. The framework does not collect data it does not need. The framework does not enable telemetry, analytics, fingerprinting, or any form of passive observation of the user.
 
