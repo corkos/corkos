@@ -1,0 +1,56 @@
+.playground-panel {
+  /* Aesthetic surface — overridable by the consumer. */
+  --playground-panel-offset: 24px;
+  --playground-panel-gap: 8px;
+  --playground-panel-font-family:
+    ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  --playground-panel-font-size: 13px;
+
+  --playground-trigger-color: #6b6b6b;
+  --playground-trigger-color-hover: #2b2b2b;
+  --playground-trigger-color-focus: #2b2b2b;
+  --playground-trigger-font-weight: 400;
+
+  /* Structural — anchored bottom-right of the viewport, growing upwards.
+     New triggers appended in DOM order render above prior ones, so the
+     oldest stays closest to the bottom edge. */
+  position: fixed;
+  bottom: var(--playground-panel-offset);
+  right: var(--playground-panel-offset);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: var(--playground-panel-gap);
+
+  /* Aesthetic applied. */
+  font-family: var(--playground-panel-font-family);
+  font-size: var(--playground-panel-font-size);
+}
+
+.playground-panel__trigger {
+  /* Strip default button chrome so the element reads as text. */
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  /* Behavioral — communicates the affordance. */
+  cursor: pointer;
+
+  /* Aesthetic applied. */
+  font: inherit;
+  color: var(--playground-trigger-color);
+  font-weight: var(--playground-trigger-font-weight);
+  text-decoration: none;
+}
+
+.playground-panel__trigger:hover {
+  color: var(--playground-trigger-color-hover);
+  text-decoration: underline;
+}
+
+.playground-panel__trigger:focus-visible {
+  color: var(--playground-trigger-color-focus);
+  text-decoration: underline;
+  outline: none;
+}

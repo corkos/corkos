@@ -1,5 +1,7 @@
 import { NotesProvider, Window, Workspace, useNotes } from '@corkos/desktop';
 
+import { PlaygroundPanel } from './playground-panel';
+
 function Notes() {
   const { notes, focusOrder, moveNote, focusNote } = useNotes();
 
@@ -24,6 +26,7 @@ export function App() {
   return (
     <NotesProvider>
       <Notes />
+      <PlaygroundPanel />
     </NotesProvider>
   );
 }
