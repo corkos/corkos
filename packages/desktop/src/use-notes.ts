@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import type { Note, NotesState, Position } from '@corkos/core';
+import type { NotesState, Position } from '@corkos/core';
 import { focusNote as focusNoteCore, moveNote as moveNoteCore } from '@corkos/core';
 
-export function useNotes(initialNotes: Note[]) {
+export function useNotes() {
   const [state, setState] = useState<NotesState>(() => ({
-    notes: initialNotes,
+    notes: [],
     focusOrder: [],
   }));
 

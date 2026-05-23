@@ -1,14 +1,7 @@
-import { createNote } from '@corkos/core';
 import { Window, Workspace, useNotes } from '@corkos/desktop';
 
-const initialNotes = [
-  createNote('Hello, Cork', { x: 100, y: 100 }),
-  createNote('Segunda nota', { x: 180, y: 160 }),
-  createNote('Tercera nota', { x: 260, y: 220 }),
-];
-
 export function App() {
-  const { notes, focusOrder, moveNote, focusNote } = useNotes(initialNotes);
+  const { notes, focusOrder, moveNote, focusNote } = useNotes();
 
   return (
     <Workspace>
