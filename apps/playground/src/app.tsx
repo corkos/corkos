@@ -1,6 +1,6 @@
-import { Window, Workspace, useNotes } from '@corkos/desktop';
+import { NotesProvider, Window, Workspace, useNotes } from '@corkos/desktop';
 
-export function App() {
+function Notes() {
   const { notes, focusOrder, moveNote, focusNote } = useNotes();
 
   return (
@@ -13,9 +13,17 @@ export function App() {
           onMove={(newPosition) => moveNote(note.id, newPosition)}
           onFocus={() => focusNote(note.id)}
         >
-          {`Cuerpo de la nota: ${note.title}`}
+          {note.body}
         </Window>
       ))}
     </Workspace>
+  );
+}
+
+export function App() {
+  return (
+    <NotesProvider>
+      <Notes />
+    </NotesProvider>
   );
 }
