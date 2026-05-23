@@ -517,6 +517,10 @@ git diff <commit1> <commit2>            # Between two commits
 
 ### Commit message conventions
 
+**Commits are atomic.** Each commit represents one conceptually distinct change: a new component, a documentation update, a refactor, a fix. Code changes, CLAUDE.md updates, and ROADMAP.md updates travel in separate commits even when they belong to the same block of work. The test: reading a commit in isolation should make sense without the surrounding ones. If a commit only makes sense alongside another, fuse them. If it does, separate them.
+
+A block of work (as tracked in MILESTONES.md) typically produces several atomic commits — one for the component, one for the documentation, one for the roadmap update, and so on. There is no "one commit per block" rule.
+
 Commit messages follow a simple, descriptive style. They should:
 
 - Start with a capitalized verb in imperative mood ("Add", "Configure", "Fix", "Refactor")
