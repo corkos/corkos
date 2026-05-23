@@ -6,5 +6,6 @@ export type Position = {
 export type Note = {
   readonly id: string;
   readonly title: string;
+  readonly body: string;
   readonly position: Position;
 };

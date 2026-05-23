@@ -7,6 +7,7 @@ export function useNotes() {
   const [state, setState] = useState<NotesState>(() => ({
     notes: [],
     focusOrder: [],
+    nextId: 1,
   }));
 
   const moveNote = useCallback((id: string, newPosition: Position) => {
