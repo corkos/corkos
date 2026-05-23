@@ -70,6 +70,10 @@ The first concrete application of the network. A cultural agenda for the city of
 
 These three levels are **separate repositories**. Corkos has no knowledge of agenda.zone or agenda.madrid; it is built to be used by anyone, for anything that fits the cork-board paradigm.
 
+### Workspace as full-viewport background layer
+
+**Workspace as full-viewport background layer.** The `Workspace` occupies the entire viewport as the bottom layer of the application, and never scrolls: its dimensions are always the viewport's, never the content's. Other elements (taskbar, menus, floating panels, springboard) may overlap the `Workspace`, but never crop it: the `Workspace` remains a complete surface, partially occluded if needed. Notes live within the rectangle of the `Workspace` and are repositioned when it changes size. The analogy is a desktop operating system: the taskbar sits *above* the desktop, and the desktop never scrolls.
+
 ## What Corkos is not
 
 To prevent misunderstandings:
