@@ -1,0 +1,18 @@
+.corkos-workspace {
+  /* Structural — full-viewport background layer that never scrolls. */
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+/*
+ * While a drag is active, force the grabbing cursor on every element
+ * under the pointer within the Workspace. !important is justified here:
+ * the rule must win regardless of any other selector's specificity, so
+ * the cursor stays consistent across the whole surface and adding new
+ * components later cannot accidentally break the affordance.
+ */
+.corkos-workspace.corkos-dragging,
+.corkos-workspace.corkos-dragging * {
+  cursor: grabbing !important;
+}
