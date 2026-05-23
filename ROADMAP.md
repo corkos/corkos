@@ -157,13 +157,23 @@ Triggered by: the first concrete use case that requires shareable
 URLs of workspace state, or when deep linking is tackled as a
 milestone of its own.
 
-### Persisting focusOrder, not just the notes
+### Persisting focusOrder and the id counter, not just the notes
 
 When persistence (Phase 4) is tackled, the minimum state to
-persist includes both `notes` and `focusOrder`. Persisting only
-`notes` loses the visual order between sessions: notes would
-restore flat, without remembering which one was raised above
-which.
+persist includes `notes`, `focusOrder`, and the `nextId` counter
+introduced by Block 4 of Phase 3.
+
+Persisting only `notes` loses the visual order between sessions:
+notes would restore flat, without remembering which one was raised
+above which.
+
+Persisting `notes` and `focusOrder` but resetting the id counter on
+load is worse than it looks: the next note created after restore
+would be assigned id `"1"`, colliding with any persisted note that
+already holds that id. Collisions would silently corrupt
+`focusOrder` and any other future reference held by id. The
+counter must be persisted alongside the notes so that newly created
+notes continue the sequence.
 
 The visually-focused note on load is none: starting a new session
 does not render a focus affordance until the user interacts, even
