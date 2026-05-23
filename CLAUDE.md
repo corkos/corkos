@@ -74,6 +74,15 @@ These three levels are **separate repositories**. Corkos has no knowledge of age
 
 **Workspace as full-viewport background layer.** The `Workspace` occupies the entire viewport as the bottom layer of the application, and never scrolls: its dimensions are always the viewport's, never the content's. Other elements (taskbar, menus, floating panels, springboard) may overlap the `Workspace`, but never crop it: the `Workspace` remains a complete surface, partially occluded if needed. Notes live within the rectangle of the `Workspace` and are repositioned when it changes size. The analogy is a desktop operating system: the taskbar sits *above* the desktop, and the desktop never scrolls.
 
+### Mode selection by device capabilities and viewport
+
+**Mode selection by device capabilities and viewport.** Corkos does not use user-agent strings to guess device brand or model. It chooses between desktop and mobile modes by combining two objective criteria:
+
+- Device capabilities (`pointer: coarse` vs fine, presence of `hover`, etc.), which may impose mobile mode even on large viewports.
+- Viewport dimensions, which may impose mobile mode when desktop minimums are not met.
+
+On devices that admit both modes (tablets, touch-screen laptops), the user may explicitly switch to mobile mode as a preference. This aligns with principle 5 (native dual-format): both modes are first-class citizens and are chosen according to objective conditions, not assumptions about the device.
+
 ## What Corkos is not
 
 To prevent misunderstandings:
