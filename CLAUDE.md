@@ -175,6 +175,24 @@ agenda.madrid is the first instance, not the only one. The data model, the conve
 
 **Implication:** never hard-code Madrid into Corkos or into the agenda layer. Cities are parameters, not assumptions.
 
+### 8. European digital sovereignty, autonomy, and minimal intrusion
+
+Corkos is a tool built in the European Union by people who believe in the digital sovereignty of the individual. It stands on three foundations that are not negotiable: privacy by design and by default, digital autonomy, and digital accessibility. These foundations are not aesthetic choices; they are the ethical core of the project, and every other decision in this codebase must remain compatible with them.
+
+The framing of these foundations follows the *European Declaration on Digital Rights and Principles for the Digital Decade* (2022), signed by the European Parliament, the Council, and the European Commission. The Declaration places people at the centre of digital transformation and commits to ensuring privacy and individual control over data. Corkos adopts this framing as its own.
+
+**Privacy by design and by default** (in the sense of Article 25 of the GDPR): Corkos is built so that the privacy-respecting behaviour is the default behaviour, not an option the user has to discover and enable. The framework does not collect data it does not need. The framework does not enable telemetry, analytics, fingerprinting, or any form of passive observation of the user.
+
+**Digital autonomy:** the user retains control over their experience. They are not nudged, dark-patterned, or steered towards decisions that benefit the operator. Choices that affect the user are surfaced honestly; defaults are reasonable for the user, not optimal for the operator. The user can leave, export, delete, or change their mind without friction.
+
+**Digital sovereignty of the individual:** distinct from geopolitical digital sovereignty (which speaks of states and economic blocs), this refers to the individual's right to be the ultimate authority over their own data, attention, and digital presence. Corkos treats the user not as a resource to be measured but as a person to be served.
+
+**Operative consequence: minimal intrusion.** From the three foundations above flows a concrete engineering discipline. Any data Corkos consults — location, device capabilities, browser, language, system preferences, identity — represents a cost to the user and a potential risk to their privacy. That cost must be justified by a real and unavoidable need of the product, not by technical convenience.
+
+When a decision can be made by consulting less information, that path is preferred. When consulting a piece of data is unavoidable, the most restricted version that solves the problem is used (`pointer: coarse` over user-agent strings; viewport size over device type; browser language over IP-based geolocation).
+
+**Implication for contributors:** every time a new query against the user or environment is introduced, it must be justified in the commit or PR: which decision depends on it, which less-intrusive alternative was discarded, and why. No data is "free" to collect. Connecting Corkos to a third-party service that collects user data on its own (analytics providers, error trackers with PII, recommendation engines tied to identity) requires this same justification and is treated as a serious architectural decision, not a convenience.
+
 ## Code conventions
 
 These conventions apply to all code in this repository. They are enforced by tooling where possible (Prettier, ESLint, TypeScript) and by convention where not.
