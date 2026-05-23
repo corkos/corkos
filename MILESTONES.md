@@ -60,26 +60,29 @@ two clean commits. Order respects dependencies: model before
 render, focus before creation, Workspace envelope before adding
 logic to it.
 
-1. **Plural model + plural render** — `useNotes` and the
+1. **Plural model + plural render** ✅ — `useNotes` and the
    underlying core operations support an array of notes; the
    playground renders N notes from a seed. Single commit possible.
 
-2. **Focus and z-index** — active note rises to the front. Focus
+2. **Focus and z-index** ✅ — active note rises to the front. Focus
    model in `@corkos/core`, z-index applied in `@corkos/desktop`.
    Click on a note focuses it; starting drag implicitly focuses
    the dragged note.
 
-3. **Workspace component** — extract `DndContext` from the
+3. **Workspace component** ✅ — extract `DndContext` from the
    playground into a `Workspace` component in `@corkos/desktop`.
    The playground stops mounting `DndContext` directly; it uses
    `<Workspace>` and renders notes inside it. This block
    activates the ROADMAP watch-item on dragging class cleanup
    (its "Triggered by" condition is met).
 
-4. **Note creation** — click on the `Workspace` background
-   creates a new note at the click position. Distinguishing
-   "click on background" from "click on note" relies on the
-   focus model from block 2.
+4. **Note creation** ✅ — the `createNote` state operation lives in
+   `@corkos/core` and is exposed via `useNotes`. Corkos does not
+   impose any gesture on the `Workspace` background; the
+   playground demonstrates the operation with its own
+   `PlaygroundPanel`, which mounts an explicit trigger and tracks
+   a local cascade position. Shared workspace state is provided by
+   a new `NotesProvider` context in `@corkos/desktop`.
 
 5. **Note deletion** — UX decision pending: button in header,
    `Delete` key on focused note, drag-out-of-workspace, or
