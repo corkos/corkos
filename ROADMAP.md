@@ -134,25 +134,6 @@ is preventive design, not speculative implementation: we are not
 building the theme system, we are making sure it can be built later
 without refactoring what exists.
 
-### Dragging class cleanup on DndContext unmount
-
-The `corkos-dragging` body class is currently applied by playground
-handlers wired to `DndContext` (`onDragStart`/`onDragEnd`/
-`onDragCancel`). If the `DndContext` is ever placed under conditional
-logic — for example, inside a `Workspace` component that mounts and
-unmounts — a component unmount during an active drag would leave the
-class orphaned on the body, and any subsequent cursor would remain
-stuck as `grabbing` until the page is reloaded.
-
-Resolution when the case appears: add a `useEffect` cleanup in the
-component that owns these handlers, ensuring the class is removed
-on unmount.
-
-Triggered by: extracting `DndContext` setup into a conditionally
-mounted component (most likely a `Workspace` envelope in
-`@corkos/desktop`, when a second consumer makes the extraction
-worthwhile).
-
 ### Focus integration with browser history
 
 The focus model from block 2 lives only in memory. It does not
@@ -216,3 +197,83 @@ When this is tackled, the open questions are:
 Triggered by: the first consumer application that needs note types
 with their own state. Almost certainly agenda.madrid when it
 builds its first note type beyond "plain text".
+
+### Confinement of notes to the Workspace
+
+Notes cannot end up at coordinates outside the rectangle of the
+`Workspace`. Applies both to drag (position clamped on release) and
+to creation (Block 4 will need to respect this).
+
+Open question: should the clamping happen in `@corkos/core` (position
+model rejects invalid coordinates) or in `@corkos/desktop` (drag
+handler enforces bounds before persisting)?
+
+Triggered by: Block 4 (note creation), or the first natural occasion
+where a drag can carry a note to coordinates outside the viewport.
+
+### Repositioning of notes on viewport resize
+
+When the viewport resizes, notes that fall outside the new rectangle
+of the `Workspace` must be repositioned to fall back inside.
+
+Open questions: should this be eager (recompute on every resize
+event) or lazy (only when needed)? Should the original positions be
+remembered for restoration if the viewport grows back?
+
+Triggered by: the first concrete report (internal or external) of
+notes becoming unreachable after a resize, or when the automatic
+desktop ↔ mobile switch is addressed in Phase 7.
+
+### Automatic desktop ↔ mobile switch
+
+The application transitions between desktop mode and mobile mode
+according to a hierarchy of criteria: device capability (smartphones
+always mobile), minimum viewport threshold (below it, mobile is
+forced), and explicit user preference on devices that admit both
+modes.
+
+The minimum-viewport thresholds (width and height) must be defined.
+The hierarchy must be revisited under principle 8 (minimal
+intrusion): can the criterion be reduced to viewport only, with
+manual override for the rest? Hypothesis to validate in Phase 7.
+
+Triggered by: Phase 7 (Mobile).
+
+### Preservation of desktop positions across mobile transitions
+
+Note positions in desktop mode are preserved in the model even when
+the application enters mobile mode (where they don't apply). When
+the application returns to desktop, notes are restored to the
+positions they had the last time desktop mode was active.
+
+Focus, by contrast, is shared between modes: any focus change made
+in mobile carries over to desktop and vice versa.
+
+Triggered by: Phase 7 (Mobile), jointly with the automatic switch.
+
+### Reachability of notes occluded by chrome
+
+When chrome elements (taskbar, menus, springboard, panels) overlap
+the `Workspace`, notes positioned behind them may become
+unreachable. Resolution depends on the chrome at hand: a taskbar
+might reserve a no-drop zone, a transient menu might not need any
+treatment, etc. Decision deferred until concrete chrome appears.
+
+Triggered by: the first appearance of chrome elements overlapping
+the `Workspace`.
+
+### License with ethical clauses
+
+The repository currently declares MIT license in its README. The
+compatibility of MIT with principle 8 (minimal intrusion and digital
+sovereignty of the individual) is indirect: it relies on GDPR and
+equivalent laws to cover what the license does not enforce.
+
+Ethical licenses exist (Hippocratic License 3.0, Anti-996, others)
+that condition use on behaviour compatible with human rights, but
+lose the canonical "open source" label as defined by the OSI. The
+final licence decision must be made before the first public npm
+release, evaluating: scope of ethical clauses (privacy, human
+rights, environment), impact on adoption, practical enforceability.
+
+Triggered by: Phase 9 (first npm release).
