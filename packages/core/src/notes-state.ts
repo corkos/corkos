@@ -75,3 +75,32 @@ export function focusNote(state: NotesState, id: string): NotesState {
   const without = state.focusOrder.filter((entry) => entry !== id);
   return { ...state, focusOrder: [...without, id] };
 }
+
+/**
+ * Removes a note from the workspace and clears any trace of it from
+ * `focusOrder`. Throws `NoteNotFoundError` if no note with the given id
+ * exists.
+ *
+ * The `focusOrder` entry is filtered defensively even when the deleted
+ * note is not the current top of the stack. The model does not strictly
+ * guarantee that every `focusOrder` entry has a matching note (a future
+ * operation could leave a stale id), so a single filter pass is more
+ * robust and idempotent than a conditional one. The cost is negligible.
+ *
+ * When the deleted note was the focused one, the new top of `focusOrder`
+ * becomes the immediately previous entry — or none, if the deleted note
+ * was the only entry. The id counter (`nextId`) is intentionally not
+ * decremented: ids must remain unique within the workspace's lifetime so
+ * that any external reference (URL, persisted layout) keeps pointing to
+ * the same logical slot.
+ */
+export function deleteNote(state: NotesState, id: string): NotesState {
+  if (!state.notes.some((note) => note.id === id)) {
+    throw new NoteNotFoundError(id);
+  }
+  return {
+    ...state,
+    notes: state.notes.filter((note) => note.id !== id),
+    focusOrder: state.focusOrder.filter((entry) => entry !== id),
+  };
+}
