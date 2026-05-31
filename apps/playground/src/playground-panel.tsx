@@ -8,7 +8,7 @@ const CASCADE_ORIGIN = { x: 40, y: 40 };
 const CASCADE_STEP = 20;
 
 export function PlaygroundPanel() {
-  const { createNote } = useNotes();
+  const { notes, createNote, deleteNote } = useNotes();
   const [cascadeIndex, setCascadeIndex] = useState(0);
 
   const handleCreate = () => {
@@ -25,6 +25,16 @@ export function PlaygroundPanel() {
       <button type="button" className="playground-panel__trigger" onClick={handleCreate}>
         Create note
       </button>
+      {notes.map((note) => (
+        <button
+          key={note.id}
+          type="button"
+          className="playground-panel__trigger"
+          onClick={() => deleteNote(note.id)}
+        >
+          Delete note {note.id}
+        </button>
+      ))}
     </aside>
   );
 }
