@@ -34,6 +34,38 @@
   --corkos-window-body-padding: 12px;
   --corkos-window-body-color: inherit;
 
+  /* Close button — aesthetic surface, overridable by external themes. */
+
+  /* Position and sizing within the header */
+  --corkos-window-close-size: 16px;
+  --corkos-window-close-padding: 2px;
+  --corkos-window-close-margin-left: 8px;
+
+  /* Glyph itself, as a mask-image data URL */
+  --corkos-window-close-icon: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M2 2 L10 10 M10 2 L2 10' stroke='black' stroke-width='1.5' stroke-linecap='round'/></svg>");
+  --corkos-window-close-icon-size: 12px;
+
+  /* Color of the icon — applied via background-color on the mask layer */
+  --corkos-window-close-icon-color: rgba(0, 0, 0, 0.5);
+  --corkos-window-close-icon-color-hover: rgba(0, 0, 0, 0.9);
+  --corkos-window-close-icon-color-active: rgba(0, 0, 0, 1);
+
+  /* Background of the button itself */
+  --corkos-window-close-bg: transparent;
+  --corkos-window-close-bg-hover: rgba(0, 0, 0, 0.08);
+  --corkos-window-close-bg-active: rgba(0, 0, 0, 0.16);
+
+  /* Border and radius */
+  --corkos-window-close-radius: 2px;
+  --corkos-window-close-border-width: 0;
+  --corkos-window-close-border-style: solid;
+  --corkos-window-close-border-color: transparent;
+
+  /* Focus ring — accessible default */
+  --corkos-window-close-focus-ring-color: rgba(0, 100, 200, 0.7);
+  --corkos-window-close-focus-ring-width: 2px;
+  --corkos-window-close-focus-ring-offset: 1px;
+
   /* Structural — hard-coded contract of the component. */
   position: absolute;
   box-sizing: border-box;
@@ -55,6 +87,12 @@
   cursor: grab;
   user-select: none;
   box-sizing: border-box;
+
+  /* Structural — title on one side, close button on the other. */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 
   /* Aesthetic applied. */
   background-color: var(--corkos-window-header-bg);
@@ -99,4 +137,72 @@
 .corkos-window--focused .corkos-window__header {
   background-color: var(--corkos-window-header-bg-focused);
   border-bottom-color: var(--corkos-window-header-border-bottom-color-focused);
+}
+
+.corkos-window__close {
+  /* Strip default button chrome */
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+
+  /* Behavioral */
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+
+  /* Structural — establish a stacking context for the masked icon */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Aesthetic applied */
+  width: var(--corkos-window-close-size);
+  height: var(--corkos-window-close-size);
+  padding: var(--corkos-window-close-padding);
+  margin-left: var(--corkos-window-close-margin-left);
+  background-color: var(--corkos-window-close-bg);
+  border: var(--corkos-window-close-border-width) var(--corkos-window-close-border-style)
+    var(--corkos-window-close-border-color);
+  border-radius: var(--corkos-window-close-radius);
+}
+
+.corkos-window__close::before {
+  /* The glyph itself, painted as a mask */
+  content: '';
+  display: block;
+  width: var(--corkos-window-close-icon-size);
+  height: var(--corkos-window-close-icon-size);
+  background-color: var(--corkos-window-close-icon-color);
+  mask-image: var(--corkos-window-close-icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: var(--corkos-window-close-icon);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+.corkos-window__close:hover {
+  background-color: var(--corkos-window-close-bg-hover);
+}
+
+.corkos-window__close:hover::before {
+  background-color: var(--corkos-window-close-icon-color-hover);
+}
+
+.corkos-window__close:active {
+  background-color: var(--corkos-window-close-bg-active);
+}
+
+.corkos-window__close:active::before {
+  background-color: var(--corkos-window-close-icon-color-active);
+}
+
+.corkos-window__close:focus-visible {
+  outline: var(--corkos-window-close-focus-ring-width) solid
+    var(--corkos-window-close-focus-ring-color);
+  outline-offset: var(--corkos-window-close-focus-ring-offset);
 }

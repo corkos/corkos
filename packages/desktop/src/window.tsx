@@ -10,8 +10,10 @@ import './window.css';
 type WindowProps = {
   note: Note;
   focusOrder?: readonly string[];
+  closable?: boolean;
   onMove?: (newPosition: Position) => void;
   onFocus?: () => void;
+  onClose?: () => void;
   children?: ReactNode;
 };
 
@@ -20,8 +22,10 @@ const EMPTY_FOCUS_ORDER: readonly string[] = [];
 export function Window({
   note,
   focusOrder = EMPTY_FOCUS_ORDER,
+  closable = true,
   onMove,
   onFocus,
+  onClose,
   children,
 }: WindowProps) {
   const { attributes, listeners, setNodeRef } = useDraggable({ id: note.id });
@@ -65,6 +69,20 @@ export function Window({
     >
       <div className="corkos-window__header" {...listeners} {...attributes}>
         <h3 className="corkos-window__title">{note.title}</h3>
+        {closable ? (
+          <button
+            type="button"
+            className="corkos-window__close"
+            aria-label={`Close note: ${note.title}`}
+            onPointerDown={(event) => {
+              event.stopPropagation();
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              onClose?.();
+            }}
+          />
+        ) : null}
       </div>
       <div className="corkos-window__body">{children}</div>
     </div>
