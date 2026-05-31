@@ -42,20 +42,32 @@ real persistence need arises.
 
 ### Accessibility refinements
 
-The default `@dnd-kit/core` keyboard sensor (Tab → Enter to grab →
-arrows to move → Enter to release) works as designed. However, full
-accessibility for Corkos as a framework requires more than the
-defaults:
+Corkos ships a baseline of accessibility primitives as part of the
+work that introduces each component (the close button delivered in
+Block 5 of Phase 3, for instance, uses `<button>`, an `aria-label`
+including the note title, and a visible `:focus-visible` outline
+themable via CSS variables). The default `@dnd-kit/core` keyboard
+sensor (Tab → Enter to grab → arrows to move → Enter to release)
+likewise works as designed. Beyond that baseline, Corkos needs a
+dedicated, comprehensive accessibility pass — not an incremental
+polish of any single component.
 
-- Screen reader announcements when a Window is grabbed, moved, or
-  released
-- Visible focus indicators that meet WCAG contrast requirements
-- A "simple mode" alternative for users with cognitive disabilities,
-  per principle 3 of CLAUDE.md
-- Keyboard shortcuts for common operations beyond drag
+The umbrella scope of that pass includes, at minimum:
 
-This is a dedicated future workstream, not an incremental polish
-of T4.
+- Visible focus indicators across the framework that meet WCAG
+  contrast requirements in every state, not only where they have
+  been added opportunistically.
+- A "simple mode" alternative for users with cognitive
+  disabilities, per principle 3 of CLAUDE.md, designed as a whole
+  rather than feature by feature.
+
+Specific topics that surfaced during earlier blocks and that
+benefit from being designed together with the broader keyboard
+and screen-reader story are tracked as their own watch-items
+below: focus restoration after destructive operations, simple
+mode for note deletion, and keyboard shortcuts for note
+operations. Screen-reader announcements during drag interactions
+likewise belong in this workstream.
 
 ### CSS distribution from framework packages
 
@@ -287,3 +299,84 @@ release, evaluating: scope of ethical clauses (privacy, human
 rights, environment), impact on adoption, practical enforceability.
 
 Triggered by: Phase 9 (first npm release).
+
+### Focus restoration after keyboard deletion of the focused note
+
+When the user activates the ✕ button with Enter or Space on the
+focused note, that note is removed from the DOM and DOM focus
+falls to the body. Decision 1 of Block 5 (Phase 3) defines which
+note is logically focused after deletion (the previous one in
+`focusOrder`, or none if the deleted note was the only one), but
+nothing moves DOM focus there. The user must press Tab to return
+to an operational point.
+
+Resolution requires coordination between `@corkos/core` (which
+note is now logically focused) and `@corkos/desktop` (which DOM
+node to land focus on). Open questions:
+
+- When at least one note remains: focus the ✕ button of the new
+  focused note, the header as a whole, the body, or another
+  canonical anchor?
+- When no notes remain: focus the Workspace, the
+  `PlaygroundPanel`, or another canonical landing point?
+- How does `Window` expose its focusable nodes from outside
+  (ref, callback, imperative handle)?
+- Does this same mechanism serve other operations that destroy
+  the focused element (future minimize, future move-to-another-
+  board, etc.)?
+
+The second question overlaps with the broader design of Tab
+navigation in Corkos, which is why this is best resolved with
+the full keyboard-navigation picture in view.
+
+Triggered by: Phase 6 (Accessibility).
+
+### Simple mode for note deletion
+
+CLAUDE.md Principle 3 commits Corkos to a "simple mode" parallel
+experience of equal dignity: linear navigation, predictable
+flow, larger fonts, plain language, fewer simultaneous elements.
+The deletion of notes in simple mode likely requires:
+
+- Larger, more prominent close affordances.
+- Explicit confirmation ("Are you sure you want to close this
+  note?") instead of single-click destruction.
+- Plain-language labels without abstract iconography.
+- Undo or recovery mechanism, since confirmation alone may not
+  be enough for users who cannot easily recover from a
+  mis-click.
+
+The concrete design depends on how simple mode is conceived as a
+whole; deletion is one of several operations that must be
+reconsidered through that lens.
+
+Triggered by: Phase 6 (Accessibility), simple-mode workstream.
+
+### Keyboard shortcuts for note operations
+
+The ✕ button delivered in Block 5 (Phase 3) is activatable with
+Enter and Space because it is a `<button>`; this is part of the
+accessibility baseline. There are no OS-style keyboard shortcuts
+yet (`Cmd+W` / `Ctrl+W` to close the focused note, equivalents
+for create, focus next, focus previous, etc.) that would let a
+keyboard-only user operate Corkos without tabbing to each
+control.
+
+Open questions:
+
+- Which operations deserve shortcuts (close, create, cycle
+  focus, minimize when it exists, etc.)?
+- Platform convention: follow macOS (`Cmd`), Windows/Linux
+  (`Ctrl`), or detect and adapt?
+- Coexistence with browser shortcuts: `Cmd+W` closes the browser
+  tab; can Corkos override it inside its viewport, and should
+  it?
+- How are shortcuts discovered by users (help panel, tooltips,
+  documentation only)?
+- How do shortcuts behave in simple mode (same, different,
+  none)?
+
+The decision benefits from having the full shortcut set
+designed together, not piecemeal per operation.
+
+Triggered by: Phase 6 (Accessibility).
