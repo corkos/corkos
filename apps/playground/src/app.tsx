@@ -3,7 +3,7 @@ import { NotesProvider, Window, Workspace, useNotes } from '@corkos/desktop';
 import { PlaygroundPanel } from './playground-panel';
 
 function Notes() {
-  const { notes, focusOrder, moveNote, focusNote } = useNotes();
+  const { notes, focusOrder, moveNote, focusNote, deleteNote } = useNotes();
 
   return (
     <Workspace>
@@ -14,6 +14,7 @@ function Notes() {
           focusOrder={focusOrder}
           onMove={(newPosition) => moveNote(note.id, newPosition)}
           onFocus={() => focusNote(note.id)}
+          onClose={() => deleteNote(note.id)}
         >
           {note.body}
         </Window>
