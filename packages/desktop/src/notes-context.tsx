@@ -3,6 +3,7 @@ import { createContext, useCallback, useContext, useMemo, useState, type ReactNo
 import type { CreateNoteOptions, Note, NotesState, Position } from '@corkos/core';
 import {
   createNote as createNoteCore,
+  deleteNote as deleteNoteCore,
   focusNote as focusNoteCore,
   moveNote as moveNoteCore,
 } from '@corkos/core';
@@ -14,6 +15,7 @@ type NotesContextValue = {
   readonly createNote: (options?: CreateNoteOptions) => void;
   readonly moveNote: (id: string, newPosition: Position) => void;
   readonly focusNote: (id: string) => void;
+  readonly deleteNote: (id: string) => void;
 };
 
 const NotesContext = createContext<NotesContextValue | null>(null);
@@ -41,6 +43,10 @@ export function NotesProvider({ children }: NotesProviderProps) {
     setState((current) => focusNoteCore(current, id));
   }, []);
 
+  const deleteNote = useCallback((id: string) => {
+    setState((current) => deleteNoteCore(current, id));
+  }, []);
+
   const focusedId = useMemo(
     () => state.focusOrder[state.focusOrder.length - 1] ?? null,
     [state.focusOrder],
@@ -54,8 +60,9 @@ export function NotesProvider({ children }: NotesProviderProps) {
       createNote,
       moveNote,
       focusNote,
+      deleteNote,
     }),
-    [state.notes, state.focusOrder, focusedId, createNote, moveNote, focusNote],
+    [state.notes, state.focusOrder, focusedId, createNote, moveNote, focusNote, deleteNote],
   );
 
   return <NotesContext.Provider value={value}>{children}</NotesContext.Provider>;
