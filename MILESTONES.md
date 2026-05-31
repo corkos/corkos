@@ -84,11 +84,20 @@ logic to it.
    a local cascade position. Shared workspace state is provided by
    a new `NotesProvider` context in `@corkos/desktop`.
 
-5. **Note deletion** — UX decision pending: button in header,
-   `Delete` key on focused note, drag-out-of-workspace, or
-   another mechanism. The decision will be made in this block's
-   chat and includes accessibility considerations (CLAUDE.md
-   Principle 3).
+5. **Note deletion** ✅ — `deleteNote` lives in `@corkos/core` as
+   a pure operation that filters the note and its `focusOrder`
+   entry, leaving `nextId` untouched. `useNotes` exposes it in
+   `@corkos/desktop`. `Window` gains a `closable` prop (default
+   `true`) and an `onClose` callback; when closable, the header
+   renders an accessible ✕ button (`<button>`, descriptive
+   `aria-label`, visible focus ring) themable through new
+   `--corkos-window-close-*` custom properties. The
+   `PlaygroundPanel` exercises the operation from outside the
+   note by rendering one "Delete note N" trigger per existing
+   note. Accessibility topics raised by this block (focus
+   restoration after destructive operations, simple-mode
+   deletion, keyboard shortcuts) are deferred to Phase 6 and
+   tracked as ROADMAP watch-items.
 
 Phase closure (verify deliverables, capture findings in ROADMAP,
 tag `v0.3.0-cork-board`) follows the established ritual and is
