@@ -37,9 +37,9 @@ fully theme-ready via CSS Custom Properties.
 - Consistent cursor during active drag
 - Children prop in Window for body content
 
-## Phase 3 — Functional cork board 🔜
+## Phase 3 — Functional cork board ✅
 
-**Anticipated tag**: `v0.3.0-cork-board`
+**Tag**: `v0.3.0-cork-board`
 
 **Demonstrable**: multiple notes coexist on the workspace; the
 user can create new ones and remove them; the active note comes
@@ -53,10 +53,10 @@ board".
 - Workspace component as the DndContext envelope (likely in
   @corkos/desktop, replacing the playground-mounted DndContext)
 
-### Block decomposition (current plan)
+### Block decomposition
 
-Phase 3 is split into five blocks of work, each producing one or
-two clean commits. Order respects dependencies: model before
+Phase 3 was split into five blocks of work, each producing one or
+two clean commits. Order respected dependencies: model before
 render, focus before creation, Workspace envelope before adding
 logic to it.
 
@@ -98,14 +98,6 @@ logic to it.
    restoration after destructive operations, simple-mode
    deletion, keyboard shortcuts) are deferred to Phase 6 and
    tracked as ROADMAP watch-items.
-
-Phase closure (verify deliverables, capture findings in ROADMAP,
-tag `v0.3.0-cork-board`) follows the established ritual and is
-not counted as a separate block.
-
-This decomposition is the current best plan; blocks may merge or
-split as work reveals new structure. Deviations are discussed
-before applying.
 
 ## Phase 4 — Persistence 🔜
 
